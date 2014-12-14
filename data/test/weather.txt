@@ -1,0 +1,23 @@
+current     | now       | weather/type      | is it going to rain
+current     | now       | weather/type      | is it going to be sunny
+current     | now       | weather/all       | what's the weather forecast
+current     | now       | weather/all       | what's the weather forecast for today
+current     | now       | weather/type      | is it going to rain today
+current     | now       | weather/type      | will it be nice today
+Cardiff     | now       | weather/type      | is it raining in Cardiff
+Cardiff     | 0i,6i     | weather/type      | is going to rain in Cardiff at the weekend
+Cardiff     | now       | weather/type      | is it nice in Cardiff
+current     | now       | weather/temp      | how hot is it today
+current     | now       | weather/temp      | is it cold today
+current     | now       | weather/temp      | is it cold outside
+current     | now       | weather/temp      | is it warm today
+Cardiff     | now       | weather/temp      | is it hot in Cardiff
+Cardiff     | now       | weather/temp      | is it cold in Cardiff today
+current     | 0i,6i     | weather/all       | what's the weather like at the weekend
+current     | now       | weather/temp      | tell me the temperature
+Bristol     | now       | weather/temp      | tell me the temperature in Bristol
+current     | now       | weather/type      | when is it going to rain next
+current     | now       | weather/type      | will it be cloudy all day
+current     | +1d,6-12h | weather/type      | will there be ice in the morning
+current     | now       | weather/type      | is it going to be windy
+current     | 1i        | weather/all       | show me the weather on Monday

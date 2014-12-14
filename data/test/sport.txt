@@ -1,0 +1,5 @@
+current     | -1d       | sport/football/results  | what was the chelsea score yesterday
+current     | 0i,6i     | sport/football/fixtures | who do swansea play at the weekend
+current     | now       | sport/football/fixtures | who do villa play on Saturday
+current     | now       | sport/football/fixtures | who do villa play next
+current     | now       | sport/football/results  | what's the latest united score

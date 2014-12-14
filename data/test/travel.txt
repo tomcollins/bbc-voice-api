@@ -1,0 +1,7 @@
+current     | now       | travel/all        | what is the traffic like
+M42         | now       | travel/all        | is the M42 clear
+M1          | now       | travel/incidents  | are there any accidents on the M1
+M1          | now       | travel/roadworks  | is there roadworks on the M6
+current     | now       | travel/roadworks  | how busy are the roads
+Cardiff     | now       | travel/all        | what are the roads like around Cardiff
+Manchester  | now       | travel/lightrail  | are the trams running ok in Manchester
