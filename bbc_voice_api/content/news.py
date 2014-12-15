@@ -1,4 +1,5 @@
 import requests
+import os
 
 import whoosh.index as whoosh_index
 from whoosh.qparser import QueryParser
@@ -63,7 +64,8 @@ def search_topics(query, limit = 1):
     if query is None:
         return []
 
-    ix = whoosh_index.open_dir('data/search/topics')
+    current_path = os.path.dirname(__file__)
+    ix = whoosh_index.open_dir(current_path + '/../../data/search/topics')
     qp = QueryParser('topic', schema=ix.schema)
     q = qp.parse(query)
 
