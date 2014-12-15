@@ -1,5 +1,5 @@
 from pyramid.view import view_config
 
-@view_config(route_name='language-parse', renderer='json')
+@view_config(route_name='news', renderer='json')
 def language_parse(request):
     return {'project': 'newshack'}
