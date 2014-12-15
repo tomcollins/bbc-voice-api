@@ -3,16 +3,30 @@ import requests
 import whoosh.index as whoosh_index
 from whoosh.qparser import QueryParser
 
-def fetch_items():
-    response = requests.get('http://newsapps-trevor-producer.cloud.bbc.co.uk/content/cps/news/front_page')
+content_endpoint = 'http://newsapps-trevor-producer.cloud.bbc.co.uk/content%s'
+
+# ipad-retina can be changed and styfull to thumbnail, styhalf
+# see https://confluence.dev.bbc.co.uk/display/newsapps/Moira+Image+Chef
+thumbnail_image_base_url = 'http://ichef.bbci.co.uk/moira/img/ipad-retina/v2/thumbnail'
+fullsize_image_base_url = 'http://ichef.bbci.co.uk/moira/img/ipad-retina/v2/styfull'
+
+def fetch_items(topic_id = None):
+    if topic_id is None:
+        topic_id = '/cps/news/front_page'
+
+    request_url = content_endpoint % topic_id
+
+    print "Requesting: %s" % request_url
+
+    response = requests.get(request_url)
 
     items = []
-    news_data = response.json()
 
-    # ipad-retina can be changed and styfull to thumbnail, styhalf
-    # see https://confluence.dev.bbc.co.uk/display/newsapps/Moira+Image+Chef
-    thumbnail_image_base_url = 'http://ichef.bbci.co.uk/moira/img/ipad-retina/v2/thumbnail'
-    fullsize_image_base_url = 'http://ichef.bbci.co.uk/moira/img/ipad-retina/v2/styfull'
+    if response.status_code != 200:
+        print "Non 200: Got %s" % response.status_code
+        return items
+
+    news_data = response.json()
 
     index = 0
     limit = 20
@@ -46,6 +60,9 @@ def fetch_items():
 
 
 def search_topics(query, limit = 1):
+    if query is None:
+        return []
+
     ix = whoosh_index.open_dir('data/search/topics')
     qp = QueryParser('topic', schema=ix.schema)
     q = qp.parse(query)
@@ -55,13 +72,18 @@ def search_topics(query, limit = 1):
     with ix.searcher() as searcher:
         results = searcher.search(q)
         for topic in results:
-            topics.append({
+            the_topic = {
                 'name': topic['topic'],
-                #'description': topic['description'],
                 'id': topic['id']
-            })
+            }
+
+            if 'description' in topic:
+                the_topic['description'] = topic['description'],
+
+            topics.append(the_topic)
+
             index = index + 1
-            if index > limit:
+            if index >= limit:
                 break
 
     return topics

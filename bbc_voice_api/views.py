@@ -5,8 +5,15 @@ import requests
 
 @view_config(route_name='news', renderer='json')
 def news(request):
-    topic = request.params.get('topic', 'front_page')
-    news_items = content.news.fetch_items()
+    topic_query = request.params.get('topic')
+    topic = content.news.search_topics(topic_query, limit=1)
+
+    topic_id = None
+    if len(topic) > 0:
+        topic = topic[0]
+        topic_id = topic['id']
+
+    news_items = content.news.fetch_items(topic_id)
 
     return {
         'topic': topic,
