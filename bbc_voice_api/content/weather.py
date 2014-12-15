@@ -69,7 +69,7 @@ def fetch_forecasts(location_id):
 
 
 def format_summary(report):
-    weather = report['type']['text'].capitalize()
+    weather = report['type']['description'].capitalize()
     high = report['temperature']['high']['c']
     low = report['temperature']['low']['c']
     format_string = '%s with a high of %d degrees and a low of %d degrees.'
