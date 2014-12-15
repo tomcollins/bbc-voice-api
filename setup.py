@@ -10,14 +10,14 @@ with open(os.path.join(here, 'CHANGES.md')) as f:
 
 requires = [
     'pyramid',
-    'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'waitress',
+    'requests'
     ]
 
-setup(name='newshack',
+setup(name='bbc_voice_api',
       version='0.0.0',
-      description='newshack',
+      description='bbc_voice_api',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
         "Programming Language :: Python",
@@ -34,9 +34,9 @@ setup(name='newshack',
       zip_safe=False,
       install_requires=requires,
       tests_require=requires,
-      test_suite="newshack",
+      test_suite="bbc_voice_api",
       entry_points="""\
       [paste.app_factory]
-      main = newshack:main
+      main = bbc_voice_api:main
       """,
       )
