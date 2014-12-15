@@ -19,3 +19,11 @@ def weather(request):
         'location': location,
         'list': forecast
     }
+
+@view_config(route_name='location', renderer='json')
+def location(request):
+    search = request.params.get('search', 'cardiff')
+    location = content.location.search_location(search)
+    return {
+            'location': location
+    }
