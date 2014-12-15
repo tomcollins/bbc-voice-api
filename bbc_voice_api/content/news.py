@@ -23,17 +23,21 @@ def fetch_items():
             image_id = find_first_image(relations)
             collection_name = find_collection_name(relations)
 
-            items.append({
+            item = {
                 'name': content['name'],
                 'shortName': content['shortName'],
                 'summary': content['summary'],
                 'lastUpdated': content['lastUpdated'],
-                'images': {
+                'collectionName': collection_name
+            }
+
+            if image_id is not None:
+                item['images'] = {
                     'fullsize': fullsize_image_base_url + image_id,
                     'thumbnail': thumbnail_image_base_url + image_id
-                },
-                'collectionName': collection_name
-            })
+                }
+
+            items.append(item)
             index = index + 1
             if index > limit:
                 break
@@ -41,12 +45,13 @@ def fetch_items():
     return items
 
 
-def search_topics(query):
+def search_topics(query, limit = 1):
     ix = whoosh_index.open_dir('data/search/topics')
     qp = QueryParser('topic', schema=ix.schema)
     q = qp.parse(query)
 
     topics = []
+    index = 0
     with ix.searcher() as searcher:
         results = searcher.search(q)
         for topic in results:
@@ -55,6 +60,9 @@ def search_topics(query):
                 #'description': topic['description'],
                 'id': topic['id']
             })
+            index = index + 1
+            if index > limit:
+                break
 
     return topics
 

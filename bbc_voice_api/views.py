@@ -16,7 +16,9 @@ def news(request):
 @view_config(route_name='news-topics', renderer='json')
 def topics(request):
     query = request.params.get('search')
-    results = content.news.search_topics(query)
+    limit = request.params.get('limit', 20)
+
+    results = content.news.search_topics(query, limit)
 
     return {
         'topics': results
