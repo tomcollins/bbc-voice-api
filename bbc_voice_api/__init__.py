@@ -7,6 +7,7 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.add_subscriber(add_cors_headers_response_callback, NewRequest)
     config.add_route('news', '/news')
+    config.add_route('news-topics', '/news/topics')
     config.add_route('weather', '/weather')
     config.add_route('location', '/location')
     config.scan()

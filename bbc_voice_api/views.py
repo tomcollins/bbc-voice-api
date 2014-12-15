@@ -13,6 +13,15 @@ def news(request):
         'news': news_items
     }
 
+@view_config(route_name='news-topics', renderer='json')
+def topics(request):
+    query = request.params.get('search')
+    results = content.news.search_topics(query)
+
+    return {
+        'topics': results
+    }
+
 @view_config(route_name='weather', renderer='json')
 def weather(request):
     location_id = request.params.get('location_id', '2653822')

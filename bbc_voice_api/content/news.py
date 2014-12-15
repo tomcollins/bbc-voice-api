@@ -1,5 +1,8 @@
 import requests
 
+import whoosh.index as whoosh_index
+from whoosh.qparser import QueryParser
+
 def fetch_items():
     response = requests.get('http://newsapps-trevor-producer.cloud.bbc.co.uk/content/cps/news/front_page')
 
@@ -36,6 +39,24 @@ def fetch_items():
                 break
 
     return items
+
+
+def search_topics(query):
+    ix = whoosh_index.open_dir('data/search/topics')
+    qp = QueryParser('topic', schema=ix.schema)
+    q = qp.parse(query)
+
+    topics = []
+    with ix.searcher() as searcher:
+        results = searcher.search(q)
+        for topic in results:
+            topics.append({
+                'name': topic['topic'],
+                #'description': topic['description'],
+                'id': topic['id']
+            })
+
+    return topics
 
 
 def find_first_image(data):
