@@ -14,7 +14,8 @@ def news(request):
 @view_config(route_name='weather', renderer='json')
 def weather(request):
     location_id = request.params.get('location_id', '2653822')
-    forecast = content.weather.fetch_forecast(location_id)
+    (location, forecast) = content.weather.fetch_forecasts(location_id)
     return {
+        'location': location,
         'list': forecast
     }
