@@ -16,7 +16,10 @@ def fetch_items():
     for article in news_data['relations']:
         content = article['content']
         if content['format'] == 'bbc.mobile.news.format.textual':
-            image_id = find_first_image(content['relations'])
+            relations = content['relations']
+            image_id = find_first_image(relations)
+            collection_name = find_collection_name(relations)
+
             items.append({
                 'name': content['name'],
                 'shortName': content['shortName'],
@@ -25,7 +28,8 @@ def fetch_items():
                 'images': {
                     'fullsize': fullsize_image_base_url + image_id,
                     'thumbnail': thumbnail_image_base_url + image_id
-                }
+                },
+                'collectionName': collection_name
             })
             index = index + 1
             if index > limit:
@@ -35,6 +39,9 @@ def fetch_items():
 
 
 def find_first_image(data):
+    """
+    Finds the first image from a list of relations
+    """
     image_id = None
     for item in data:
         if item['primaryType'] == 'bbc.mobile.news.image':
@@ -42,3 +49,16 @@ def find_first_image(data):
             break
 
     return image_id
+
+
+def find_collection_name(data):
+    """
+    Finds the collection name from relation
+    """
+    collection_name = None
+    for item in data:
+        if item['primaryType'] == 'bbc.mobile.news.collection':
+            collection_name = item['content']['name']
+            break
+
+    return collection_name

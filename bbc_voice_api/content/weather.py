@@ -12,15 +12,18 @@ def fetch_forecasts(location_id):
     for day_data in forecast_data:
         day = day_data['summary']['report']
         forecasts.append({
+            'type': {
+                'id': type_id,
+                'text': type_text
+            },
             'temperature': {
                 'high': { 'c': temperature_high_c, 'f': temperature_high_f },
                 'low': { 'c': temperature_low_c, 'f': temperature_low_c }
             },
             'wind': {
-                'speed': {}
+                'direction': { 'code': wind_direction_code, 'text': wind_direction_text },
+                'speed': { 'kph': wind_speed_kph, 'mph': wind_speed_mph }
             }
         })
 
-
-
-
+    return forecasts
