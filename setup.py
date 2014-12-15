@@ -12,7 +12,8 @@ requires = [
     'pyramid',
     'pyramid_debugtoolbar',
     'waitress',
-    'requests'
+    'requests',
+    'nltk'
     ]
 
 setup(name='bbc_voice_api',
