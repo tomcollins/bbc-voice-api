@@ -5,19 +5,28 @@ import requests
 
 @view_config(route_name='news', renderer='json')
 def news(request):
+    topic = request.params.get('topic', 'front_page')
     news_items = content.news.fetch_items()
 
     return {
-        'list': news_items
+        'topic': topic,
+        'news': news_items
     }
 
 @view_config(route_name='weather', renderer='json')
 def weather(request):
     location_id = request.params.get('location_id', '2653822')
+
+    # Try to search for a location
+    location = request.params.get('location')
+    if location is not None:
+        location = content.location.search_location(location)
+        location_id = location['id']
+
     (location, forecast) = content.weather.fetch_forecasts(location_id)
     return {
         'location': location,
-        'list': forecast
+        'weather': forecast
     }
 
 @view_config(route_name='location', renderer='json')
