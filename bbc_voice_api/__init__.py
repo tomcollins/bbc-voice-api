@@ -5,7 +5,7 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
     config = Configurator(settings=settings)
-    config.add_subscriber(add_cors_headers_response_callback, NewRequest)
+    config.add_subscriber(add_headers_response_callback, NewRequest)
     config.add_route('news', '/news')
     config.add_route('news-topics', '/news/topics')
     config.add_route('weather', '/weather')
@@ -14,10 +14,13 @@ def main(global_config, **settings):
     return config.make_wsgi_app()
 
 
-def add_cors_headers_response_callback(event):
-    def cors_headers(request, response):
+def add_headers_response_callback(event):
+    def headers(request, response):
         response.headers.update({
             'Access-Control-Allow-Origin': '*'
         })
-    event.request.add_response_callback(cors_headers)
+        response.headers.update({
+            'Cache-Control': 'public, max-age=300'
+        })
+    event.request.add_response_callback(headers)
 

@@ -13,6 +13,7 @@ requires = [
     'pyramid_debugtoolbar',
     'waitress',
     'requests',
+    'requests_cache',
     'nltk',
     'whoosh'
     ]

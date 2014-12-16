@@ -1,8 +1,11 @@
 import requests
+import requests_cache
 import os
 
 import whoosh.index as whoosh_index
 from whoosh.qparser import QueryParser
+
+requests_cache.install_cache('voice_cache', expire_after=300)
 
 content_endpoint = 'http://newsapps-trevor-producer.cloud.bbc.co.uk/content%s'
 
@@ -43,7 +46,8 @@ def fetch_items(topic_id = None):
                 'shortName': content['shortName'],
                 'summary': content['summary'],
                 'lastUpdated': content['lastUpdated'],
-                'collectionName': collection_name
+                'collectionName': collection_name,
+                'shareUrl': content['shareUrl']
             }
 
             if image_id is not None:
