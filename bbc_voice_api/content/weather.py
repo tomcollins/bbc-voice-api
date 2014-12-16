@@ -1,8 +1,10 @@
+import os
 import requests
 import requests_cache
 from datetime import datetime
 
-requests_cache.install_cache('voice_cache', expire_after=300)
+data_path = os.path.realpath(os.path.dirname(__file__) + '/../../data/')
+requests_cache.install_cache(data_path + '/cache/voice_cache', expire_after=300)
 
 feed_url = 'http://open.live.bbc.co.uk/weather/feeds/en/%s/location-weather.json'
 

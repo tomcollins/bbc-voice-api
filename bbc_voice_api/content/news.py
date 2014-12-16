@@ -5,7 +5,9 @@ import os
 import whoosh.index as whoosh_index
 from whoosh.qparser import QueryParser
 
-requests_cache.install_cache('voice_cache', expire_after=300)
+
+data_path = os.path.realpath(os.path.dirname(__file__) + '/../../data/')
+requests_cache.install_cache(data_path + '/cache/voice_cache', expire_after=300)
 
 content_endpoint = 'http://newsapps-trevor-producer.cloud.bbc.co.uk/content%s'
 
